@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fraud Investigation Agent</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e8f4fd;
+            color: #1a73e8;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333;
+            background: #fafafa;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #1a73e8;
+            background: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background: #1557b0;
+        }
+
+        .divider {
+            height: 1px;
+            background: #eee;
+            margin: 24px 0;
+        }
+
+        .signals-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 480px) {
+            .signals-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="header">
+        <span class="badge">Powered by Claude AI</span>
+        <h1>Fraud Investigation Agent</h1>
+        <p>Select transaction signals below to generate an AI-powered fraud risk report</p>
+    </div>
+
+    <form action="/investigate" method="post">
+
+        <div class="signals-grid">
+
+            <div class="form-group">
+                <label>Transaction Amount</label>
+                <select name="transactionAmount">
+                    <option value="">-- Select --</option>
+                    <option value="$10 - $50">$10 - $50</option>
+                    <option value="$51 - $200">$51 - $200</option>
+                    <option value="$201 - $500">$201 - $500</option>
+                    <option value="$500+">$500+</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Transaction Velocity</label>
+                <select name="transactionVelocity">
+                    <option value="">-- Select --</option>
+                    <option value="First transaction">First transaction</option>
+                    <option value="2-3 times in last hour">2-3 times in last hour</option>
+                    <option value="4-6 times in last hour">4-6 times in last hour</option>
+                    <option value="7+ times in last hour">7+ times in last hour</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Geographic Match</label>
+                <select name="geographicMatch">
+                    <option value="">-- Select --</option>
+                    <option value="Billing and shipping match">Billing and shipping match</option>
+                    <option value="Minor mismatch">Minor mismatch</option>
+                    <option value="Different state">Different state</option>
+                    <option value="Different country">Different country</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Card Type</label>
+                <select name="cardType">
+                    <option value="">-- Select --</option>
+                    <option value="Standard credit">Standard credit</option>
+                    <option value="Debit">Debit</option>
+                    <option value="Prepaid">Prepaid</option>
+                    <option value="Virtual card">Virtual card</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Time of Day</label>
+                <select name="timeOfDay">
+                    <option value="">-- Select --</option>
+                    <option value="Business hours (9am - 6pm)">Business hours (9am - 6pm)</option>
+                    <option value="Evening (6pm - 10pm)">Evening (6pm - 10pm)</option>
+                    <option value="Late night (10pm - 2am)">Late night (10pm - 2am)</option>
+                    <option value="Early morning (2am - 6am)">Early morning (2am - 6am)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Channel</label>
+                <select name="channel">
+                    <option value="">-- Select --</option>
+                    <option value="Returning web customer">Returning web customer</option>
+                    <option value="Returning app customer">Returning app customer</option>
+                    <option value="First-time web">First-time web</option>
+                    <option value="First-time app">First-time app</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="divider"></div>
+
+        <button type="submit" class="submit-btn">Run Fraud Investigation</button>
+
+    </form>
+</div>
+</body>
+</html>

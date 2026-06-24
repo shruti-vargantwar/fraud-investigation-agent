@@ -1,0 +1,11 @@
+Analyze the following transaction and produce a fraud investigation report.
+
+TRANSACTION SIGNALS:
+1. Transaction Amount: {transactionAmount}
+2. Transaction Velocity: {transactionVelocity}
+3. Geographic Match: {geographicMatch}
+4. Card Type: {cardType}
+5. Time of Day: {timeOfDay}
+6. Channel: {channel}
+
+Respond with ONLY the JSON object.
