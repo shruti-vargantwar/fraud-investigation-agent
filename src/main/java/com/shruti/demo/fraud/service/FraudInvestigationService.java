@@ -7,6 +7,7 @@ import com.shruti.demo.fraud.model.TransactionInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +31,15 @@ public class FraudInvestigationService {
         this.claudeApiClient = claudeApiClient;
     }
 
+    @Cacheable(value = "fraudInvestigations", key = "#input.transactionAmount + '_' + #input.transactionVelocity + '_' + #input.geographicMatch + '_' + #input.cardType + '_' + #input.timeOfDay + '_' + #input.channel")
     public FraudInvestigationReport investigate(TransactionInput input) {
-        log.info("Starting fraud investigation for transaction");
+        log.info("Cache MISS -- calling Claude API for signals: {} | {} | {} | {} | {} | {}",
+                input.getTransactionAmount(),
+                input.getTransactionVelocity(),
+                input.getGeographicMatch(),
+                input.getCardType(),
+                input.getTimeOfDay(),
+                input.getChannel());
 
         try {
             String systemPrompt = systemPromptResource
