@@ -31,17 +31,12 @@ against each other, and produces a structured fraud investigation report with:
 
 ## How It Works
 
-User submits 6 signals via form
-↓
-FraudController receives input
-↓
-FraudInvestigationService loads prompts from resources/prompts/
-↓
-ClaudeApiClient sends structured prompt to Anthropic API
-↓
-Claude reasons through all 6 signals and returns structured JSON
-↓
-Report rendered: Risk Score + Signals + Reasoning + Recommended Action
+1. User submits 6 signals via the input form
+2. FraudController receives the form data
+3. FraudInvestigationService loads prompts from `src/main/resources/prompts/`
+4. ClaudeApiClient sends structured prompt to Anthropic API
+5. Claude reasons through all 6 signals and returns structured JSON
+6. Report rendered: Risk Score + Signals + Reasoning + Recommended Action
 
 ## Prompt Engineering Design
 
@@ -107,6 +102,44 @@ at lower cost without sacrificing intelligence.
 
 ### Fraud Investigation Report
 ![Fraud Report](docs/images/screenshot-report.png)
+
+## Project Structure
+
+```
+src/main/java/com/shruti/demo/
+├── fraud/
+│   ├── config/
+│   │   ├── CacheConfig.java              # Caffeine cache (local profile)
+│   │   └── RedisCacheConfig.java         # Redis cache (prod profile)
+│   ├── controller/
+│   │   └── FraudController.java          # Handles form submit and report rendering
+│   ├── model/
+│   │   ├── TransactionInput.java         # 6 signal fields as input
+│   │   └── FraudInvestigationReport.java # Structured output (score, reasoning, action)
+│   └── service/
+│       ├── ClaudeApiClient.java          # Raw JDK 17 HTTP wrapper for Anthropic API
+│       └── FraudInvestigationService.java# Prompt loading, Claude call, JSON parsing
+└── fraud_investigation_agent/
+    └── FraudInvestigationAgentApplication.java  # Spring Boot entry point
+
+src/main/resources/
+├── prompts/
+│   ├── system-prompt.txt             # Claude persona and JSON output contract
+│   └── user-prompt-template.txt      # 6 signal placeholders for substitution
+├── templates/
+│   ├── index.html                    # Input form (6 dropdowns)
+│   └── report.html                   # Risk report page
+├── application.properties            # Base config
+└── application-prod.properties       # Redis config (prod profile)
+
+docs/
+└── images/
+    ├── screenshot-input.png
+    └── screenshot-report.png
+
+Dockerfile                            # Docker build for Render and Railway
+pom.xml
+```
 
 ## Author
 

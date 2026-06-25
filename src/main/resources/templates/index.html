@@ -99,6 +99,11 @@
             background: #1557b0;
         }
 
+        .submit-btn:disabled {
+            background: #90CAF9;
+            cursor: not-allowed;
+        }
+
         .divider {
             height: 1px;
             background: #eee;
@@ -114,6 +119,41 @@
         @media (max-width: 480px) {
             .signals-grid { grid-template-columns: 1fr; }
         }
+
+        .loading {
+            display: none;
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .loading-text {
+            color: #1a73e8;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar-track {
+            width: 100%;
+            background: #e3f2fd;
+            border-radius: 4px;
+            height: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 6px;
+            width: 0%;
+            background: #1a73e8;
+            border-radius: 4px;
+            animation: fillBar 9s ease-in-out forwards;
+        }
+
+        @keyframes fillBar {
+            0%   { width: 0%; }
+            60%  { width: 75%; }
+            90%  { width: 90%; }
+            100% { width: 95%; }
+        }
     </style>
 </head>
 <body>
@@ -124,7 +164,7 @@
         <p>Select transaction signals below to generate an AI-powered fraud risk report</p>
     </div>
 
-    <form action="/investigate" method="post">
+    <form action="/investigate" method="post" id="fraudForm">
 
         <div class="signals-grid">
 
@@ -198,9 +238,24 @@
 
         <div class="divider"></div>
 
-        <button type="submit" class="submit-btn">Run Fraud Investigation</button>
+        <button type="submit" class="submit-btn" id="submitBtn">Run Fraud Investigation</button>
 
     </form>
+
+    <div class="loading" id="loadingSection">
+        <p class="loading-text">Claude is analyzing all six signals simultaneously...</p>
+        <div class="progress-bar-track">
+            <div class="progress-bar-fill"></div>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.getElementById('fraudForm').addEventListener('submit', function() {
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').textContent = 'Investigating...';
+        document.getElementById('loadingSection').style.display = 'block';
+    });
+</script>
 </body>
 </html>
