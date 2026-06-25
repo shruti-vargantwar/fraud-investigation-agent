@@ -4,8 +4,6 @@ An AI-powered fraud risk analysis agent built with Spring Boot and Claude (Anthr
 
 ## Live Demo
 
-## Live Demo
-
 **Primary (Railway - always on, fastest response):**
 - https://fraud-investigation-agent-production-c4c7.up.railway.app
 
