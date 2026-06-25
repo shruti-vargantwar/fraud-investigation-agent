@@ -4,11 +4,13 @@ An AI-powered fraud risk analysis agent built with Spring Boot and Claude (Anthr
 
 ## Live Demo
 
-Primary (Railway - always on, fastest response):
-https://fraud-investigation-agent-production-c4c7.up.railway.app
+## Live Demo
 
-Backup (Render - free tier, may take 30-60 seconds to spin up on first visit):
-https://fraud-investigation-agent.onrender.com
+**Primary (Railway - always on, fastest response):**
+- https://fraud-investigation-agent-production-c4c7.up.railway.app
+
+**Backup (Render - free tier, may take 30-60 seconds to spin up on first visit):**
+- https://fraud-investigation-agent.onrender.com
 
 ## What It Does
 
