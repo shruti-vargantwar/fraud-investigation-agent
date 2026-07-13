@@ -29,6 +29,10 @@ against each other, and produces a structured fraud investigation report with:
 5. Time of Day
 6. Channel
 
+## Architecture Diagram
+
+![Request flow diagram](docs/architecture-diagram.png)
+
 ## How It Works
 
 1. User submits 6 signals via the input form
